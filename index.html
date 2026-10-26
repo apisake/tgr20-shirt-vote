@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ตัวอย่างแบบเสื้อทีม TGR#20 ของมหาวิทยาลัยศิลปากร สามแบบ ทั้งเสื้อขาวและเสื้อดำ">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px) }
+body { margin: 0; font: 14px system-ui, sans-serif }
+img { max-width: 100% }
+[hidden] { display: none !important }
+</style>
+<title>TGR#20 Team Shirts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<style>
+/* Layout: a gallery index of three shirt cards; each design opens as its own page with a shirt viewer up top,
+   then the design notes, the front print and the print sizes. */
+:root {
+  --paper: #F2F4F0;
+  --card: #FFFFFF;
+  --ink: #16201C;
+  --muted: #586560;
+  --line: #D6DCD7;
+  --canet: #3A7A64;
+  --click: #D9433A;
+  --scroll: #6347E8;
+  --bean: #74894A;
+  --chip: #E7ECE7;
+  --display: "Bai Jamjuree", "IBM Plex Sans Thai", Tahoma, sans-serif;
+  --body: "IBM Plex Sans Thai", Tahoma, "Noto Sans Thai", sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111614; --card: #1A211E; --ink: #EDF1EC; --muted: #9DA9A3; --line: #2A3330;
+    --canet: #5FB394; --click: #FF7A70; --scroll: #A894FF; --bean: #A7BF76; --chip: #232B28;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #111614; --card: #1A211E; --ink: #EDF1EC; --muted: #9DA9A3; --line: #2A3330;
+  --canet: #5FB394; --click: #FF7A70; --scroll: #A894FF; --bean: #A7BF76; --chip: #232B28;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box }
+body {
+  background: var(--paper); color: var(--ink); font: 400 16px/1.65 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 48px }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0; text-wrap: balance }
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700 }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700 }
+h3 { font-size: 1.15rem; font-weight: 600 }
+p { margin: 0 }
+.eyebrow { font: 600 0.78rem/1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted) }
+.lede { font-size: 1.1rem; color: var(--muted); max-width: 62ch }
+a { color: inherit }
+:focus-visible { outline: 2px solid var(--canet); outline-offset: 3px; border-radius: 6px }
+
+/* ---------- index ---------- */
+.intro { display: grid; gap: 14px }
+.teams { display: flex; flex-wrap: wrap; gap: 8px 18px; font: 600 0.92rem var(--mono) }
+.teams span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px }
+.t-canet { color: var(--canet) } .t-click { color: var(--click) } .t-scroll { color: var(--scroll) }
+.cta {
+  display: grid; gap: 14px; justify-items: start; margin-top: 8px; padding: 20px 22px;
+  background: var(--card); border: 1.5px solid var(--canet); border-radius: 14px; max-width: 62ch;
+}
+.cta p { font: 600 clamp(1.1rem, 2.4vw, 1.3rem)/1.5 var(--display); color: var(--ink) }
+.vote {
+  justify-self: start; padding: 12px 22px; border-radius: 999px; text-decoration: none;
+  font: 600 1.05rem var(--display); background: var(--canet); color: var(--paper);
+  transition: transform .18s ease, filter .18s ease;
+}
+.vote:hover { transform: translateY(-2px); filter: brightness(1.08) }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px }
+.design-card {
+  display: grid; grid-template-rows: auto 1fr; text-decoration: none; background: var(--card);
+  border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  transition: transform .18s ease, border-color .18s ease;
+}
+.design-card:hover { transform: translateY(-3px); border-color: var(--muted) }
+.design-card img { display: block; width: 100%; aspect-ratio: 12 / 7; object-fit: cover; background: #2B3034 }
+.design-card .txt { display: grid; gap: 8px; padding: 18px 18px 20px; align-content: start }
+.design-card .num { font: 600 0.78rem var(--mono); letter-spacing: 0.1em; color: var(--muted) }
+.design-card p { color: var(--muted); font-size: 0.95rem }
+.design-card .go { font: 600 0.9rem var(--display); color: var(--ink); margin-top: 6px }
+.shared { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; border-top: 1px solid var(--line); padding-top: 28px }
+.shared div { display: grid; gap: 6px; align-content: start; min-width: 0 }
+.shared p { color: var(--muted); font-size: 0.95rem }
+
+/* ---------- design page ---------- */
+.back { font: 600 0.92rem var(--display); text-decoration: none; color: var(--muted); justify-self: start }
+.back:hover { color: var(--ink) }
+.head { display: grid; gap: 12px }
+.viewer { display: grid; gap: 16px }
+.stage { background: #2B3034; border-radius: 16px; overflow: hidden }
+.stage img { display: block; width: 100%; height: auto; aspect-ratio: 12 / 7 }
+.controls { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card) }
+.seg button, .people button {
+  font: 500 0.92rem var(--body); color: var(--ink); background: none; border: 0; border-radius: 999px;
+  padding: 6px 14px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper) }
+.people { display: flex; flex-wrap: wrap; gap: 6px }
+.people button { background: var(--chip); font-family: var(--mono); font-weight: 600; font-size: 0.85rem; display: inline-flex; gap: 7px; align-items: center }
+.people button i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; display: inline-block }
+.people button[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: -2px }
+.caption { color: var(--muted); font-size: 0.92rem }
+
+.section { display: grid; gap: 18px; border-top: 1px solid var(--line); padding-top: 28px }
+.notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 32px }
+.note { display: grid; gap: 6px; align-content: start; min-width: 0 }
+.note p, .note li { color: var(--muted) }
+.note ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px }
+code, .mono { font-family: var(--mono); font-size: 0.9em }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px }
+.figure { display: grid; gap: 8px; min-width: 0 }
+.figure img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line) }
+.sizes { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums }
+.sizes th, .sizes td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top }
+.sizes th { font: 600 0.8rem var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted) }
+.table-wrap { overflow-x: auto }
+.pager { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 24px }
+.pager a { text-decoration: none; font: 600 1rem var(--display) }
+.pager a span { display: block; font: 500 0.78rem var(--mono); color: var(--muted); letter-spacing: 0.08em }
+.motto { font: 700 1.05rem var(--display); letter-spacing: 0.08em }
+.motto em { font-style: normal; font-weight: 500; color: var(--bean) }
+
+@media (max-width: 860px) {
+  .cards, .shared { grid-template-columns: minmax(0, 1fr) }
+  .notes, .split { grid-template-columns: minmax(0, 1fr) }
+}
+@media (prefers-reduced-motion: reduce) { .design-card, .vote { transition: none } .design-card:hover, .vote:hover { transform: none } }
+</style>
+</head>
+<body>
+
+<main class="wrap" id="app"></main>
+
+<script>
+const TEAMS = {
+  "CANET": { cls: "t-canet" },
+  "muzik.click()": { cls: "t-click" },
+  "muzik.scroll()": { cls: "t-scroll" },
+};
+const PEOPLE = [
+  { id: "boss", name: "BOSS", team: "CANET", role: "CREW" },
+  { id: "bam-f", name: "BAM ♀", team: "CANET", role: "CREW" },
+  { id: "bam-m", name: "BAM ♂", team: "CANET", role: "CREW" },
+  { id: "sun", name: "SUN", team: "CANET", role: "CREW" },
+  { id: "fasia", name: "FASIA", team: "CANET", role: "CREW" },
+  { id: "a-sek", name: "A.SEK", team: "CANET", role: "COACH" },
+  { id: "jazz", name: "JAZZ", team: "muzik.click()", role: "CREW" },
+  { id: "a-pooh", name: "A.POOH", team: "muzik.click()", role: "COACH" },
+  { id: "garfield", name: "GARFIELD", team: "muzik.scroll()", role: "CREW" },
+  { id: "a-ple", name: "A.PLE", team: "muzik.scroll()", role: "COACH" },
+];
+// back-print heights (cm) for designs whose back grows with the name
+const BACK_H = {
+  2: { "boss": 34.0, "bam-f": 34.0, "bam-m": 34.0, "sun": 34.0, "fasia": 33.3, "a-sek": 33.3, "jazz": 34.0, "a-pooh": 32.3, "garfield": 30.9, "a-ple": 33.3 },
+  3: { "boss": 38.1, "bam-f": 38.1, "bam-m": 37.7, "sun": 38.6, "fasia": 37.2, "a-sek": 37.2, "jazz": 38.6, "a-pooh": 35.2, "garfield": 33.4, "a-ple": 37.5 },
+};
+
+const DESIGNS = [
+  {
+    n: 1, token: "d1", name: "Team Badge",
+    tagline: "ลายอกซ้ายบอกทีม ด้านหลังชื่อตัวใหญ่เต็มแผ่นหลัง",
+    intro: "แบบเรียบที่สุดในสามแบบ ลายอกซ้ายบอกทีมของคนใส่ ด้านหลังให้ชื่อคนเป็นพระเอก",
+    front: { where: "อกซ้าย", w: 14.0, h: 8.5, note: "ลายอกต่างกันตามทีม" },
+    back: { w: 27.0, h: "39.5", note: "ใต้คอ 5 cm" },
+    notes: [
+      ["ด้านหน้า · อกซ้าย", ["โลโก้สามทีมเรียง muzik.click() · CANET · muzik.scroll() มีวงกลมรอบโลโก้ทีมของคนใส่",
+        "SILPAKORN UNIVERSITY ตามด้วยชื่อทีมในสีประจำทีม ใช้ตัวอักษรแบบเดียวกับโลโก้ทีม",
+        "บรรทัดล่างสุดเป็น TGR#20 (2026)"]],
+      ["ด้านหลัง", ["ชื่อคนตัวใหญ่แบบ DIN Condensed ชิดใต้ SILPAKORN UNIVERSITY ทุกคนในระยะเท่ากัน",
+        "ชื่อยาวจะตัวเล็กลงให้พอดีความกว้าง แล้วส่วนล่างทั้งหมดขยับขึ้นตาม ไม่เหลือช่องว่าง",
+        "CREW หรือ COACH มีเส้นขนาบ โค้ชเป็นสีเขียว",
+        "โลโก้สามทีมพร้อมชื่อทีม วงกลมรอบทีมตัวเอง แล้วปิดด้วย TESA TOP GUN RALLY #20 และ KMITL-CHUMPHON · 15–21 NOV 2026"]],
+      ["จุดสกรีน", ["สกรีนสองจุด: อกซ้าย 14 × 8.5 cm และหลัง 27 × 39.5 cm",
+        "ไม่มีลายแขน",
+        "ลายหลังเริ่มใต้คอเสื้อ 5 cm"]],
+      ["ชื่อซ้ำ", ["BAM สองคนแยกด้วยสัญลักษณ์ ♀ สีชมพู และ ♂ สีฟ้า ต่อท้ายชื่อด้านหลัง",
+        "สีเข้มบนเสื้อขาว สีสว่างบนเสื้อดำ"]],
+    ],
+    chestCaption: "ลายอกซ้ายของทั้งสามทีม (ขยาย 3 เท่า) ต่างกันที่ชื่อทีม สีชื่อ และวงกลมรอบโลโก้ทีมตัวเอง",
+  },
+  {
+    n: 2, token: "d2", name: "Programmer",
+    tagline: "หน้าอกเป็นการเรียกฟังก์ชัน ด้านหลังเป็นหน้าจอโค้ดที่ประกาศตัวคนใส่",
+    intro: "แบบสายโปรแกรมเมอร์ ใช้ตัวอักษรโค้ดทั้งตัว หน้าอกเขียนเหมือนส่งโลโก้ทีมเข้าไปในฟังก์ชันของมหาวิทยาลัย ด้านหลังให้ชื่ออยู่บนสุดแล้วตามด้วยโค้ดที่ตัวอักษรขนาดเท่ากันทุกบรรทัด",
+    front: { where: "กลางอก", w: 25.0, h: 15.0, note: "ลายเดียวกันทุกคน" },
+    back: { w: 27.0, h: "byName", note: "สูงตามความยาวชื่อ ใต้คอ 5 cm" },
+    notes: [
+      ["ด้านหน้า · กลางอก", ["<code>silpakorn.university(</code> โลโก้สามทีม <code>);</code> ตามด้วย comment <code>// TGR#20 (2026)</code>",
+        "โลโก้เรียงแบบเดียวกับแบบที่ 1 ใต้โลโก้มีชื่อทีมสีประจำทีมคั่นด้วย comma เหมือน argument",
+        "ลายหน้าเหมือนกันทุกคน"]],
+      ["ด้านหลัง", ["ชื่อคนตัวใหญ่แยกอยู่บนสุด ใช้ Menlo ตัวโค้ด จัดกึ่งกลาง",
+        "ตามด้วยโค้ดมีเลขบรรทัดแบบ editor: <code>const crew = { name, role, team };</code> โค้ชใช้ <code>const coach</code>",
+        "ทุกบรรทัดของโค้ดใช้ขนาดตัวอักษรเท่ากัน comment บอกมหาวิทยาลัย งาน และสถานที่",
+        "ปิดด้วยป้ายทีม: โลโก้ทีมในวงกลม คำว่า CREW หรือ COACH ตัวใหญ่ และชื่อทีมกำกับ"]],
+      ["สีของโค้ด", ["คำสำคัญและวงเล็บใช้สีรอง ค่าที่สำคัญใช้สีหลัก",
+        "ชื่อทีมใช้สีประจำทีม และ \"COACH\" ใช้สีเขียวเหมือนแบบที่ 1"]],
+      ["ความสูงลายหลัง", ["ตัวโค้ดเป็น monospace ชื่อยาวจึงต้องเล็กลง ลายหลังเตี้ยลงตาม",
+        "ชื่อสั้นสูงราว 34 cm ส่วน GARFIELD ราว 31 cm"]],
+    ],
+    chestCaption: "ลายหน้าอกกลาง ขยาย 3 เท่า",
+  },
+  {
+    n: 3, token: "d3", name: "Robusta",
+    tagline: "ตรากลางอกพร้อมคำโปรย ARS LONGA, ROBUSTA BREVIS",
+    intro: "ชุมพรคือบ้านของกาแฟ Robusta แบบนี้จึงใช้เมล็ดกาแฟดิบ (green bean) เป็นเครื่องประดับเล็ก ๆ วาดให้เรียบเหมือนโลโก้ทีม ไม่แย่งความเด่นของชื่อมหาวิทยาลัยและโลโก้",
+    front: { where: "กลางอก", w: 20.0, h: 12.8, note: "ลายเดียวกันทุกคน" },
+    back: { w: 27.0, h: "byName", note: "สูงไม่เกิน 38.6 cm ใต้คอ 5 cm" },
+    notes: [
+      ["ด้านหน้า · กลางอก", ["ตราจัดกึ่งกลาง: SILPAKORN UNIVERSITY, โลโก้สามทีม, TGR#20 (2026) และคำโปรย",
+        "โลโก้แต่ละทีมเป็นวงกลมถมสีทีมแล้วเจาะเป็นรูปโลโก้ ให้เห็นสีเสื้อ ต่างจากด้านหลังที่เป็นโลโก้สีเต็ม",
+        "ส่วนสีอ่อนของโลโก้ (งาช้าง ปุ่มเมาส์) ใส่กลับเป็นสีทีมแบบอ่อน จึงยังเห็นรายละเอียด"]],
+      ["คำโปรย", ["มาจากวลีละติน <em>Ars longa, vita brevis</em> (ศิลปะยืนยาว ชีวิตแสนสั้น) ของฮิปโปเครตีส โดยเอา Robusta มาแทน vita",
+        "อ่านได้สองแบบ: ฝีมือต้องใช้เวลานานแต่กาแฟหมดไว และ <em>robusta</em> ในภาษาละตินแปลว่าแข็งแรง จึงอ่านว่าความแข็งแรงอยู่ได้ไม่นาน",
+        "ARS LONGA และ BREVIS เป็นตัวหนา ROBUSTA ตัวบางสีเขียวเมล็ด และใช้เมล็ดกาแฟแทนตัว O"]],
+      ["เมล็ด Robusta green bean", ["ทรงค่อนข้างกลม ร่องกลางเกือบตรงตามลักษณะของ Robusta (Arabica ร่องโค้งเป็นตัว S)",
+        "สีเดียว ไม่มีเส้นขอบ เจาะร่องกลางแบบเดียวกับที่โลโก้ทีมเจาะรายละเอียด และมีเส้นไฮไลต์สีอ่อน",
+        "สีเขียวมะกอกอ่อนของเมล็ดดิบ แยกจากสีเขียวของ CANET ได้"]],
+      ["ด้านหลัง", ["ชื่อ CREW / COACH และโลโก้สามทีมแบบเดียวกับแบบที่ 1",
+        "มีเมล็ดเดียวคั่นกลางเส้นเหนือ TESA TOP GUN RALLY #20"]],
+    ],
+    chestCaption: "ตรากลางอก ขยาย 3 เท่า",
+  },
+];
+
+const THAI = { white: "เสื้อขาว", black: "เสื้อดำ" };
+const app = document.getElementById("app");
+const state = { color: "black", person: "boss" };
+try { const s = JSON.parse(localStorage.getItem("tgr-shirts") || "{}"); Object.assign(state, s) } catch (e) {}
+const save = () => { try { localStorage.setItem("tgr-shirts", JSON.stringify(state)) } catch (e) {} };
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const team = p => TEAMS[p.team].cls;
+
+function renderIndex() {
+  document.title = "TGR#20 Team Shirts";
+  app.innerHTML = `
+    <header class="intro">
+      <p class="eyebrow">Silpakorn University · TESA Top Gun Rally #20 · KMITL-Chumphon 15–21 Nov 2026</p>
+      <h1>เสื้อทีม TGR#20</h1>
+      <p class="lede">ตัวอย่างแบบเสื้อที่เลือกมาแสดงให้ดูว่าถ้าพิมพ์เสื้อแล้วหน้าตาจะเป็นอย่างไร ทั้งเสื้อขาวและเสื้อดำ เลือกแบบเพื่อดูเสื้อของแต่ละแนวคิดการออกแบบ การแสดงเสื้อลองเอาจำนวนคนจากทีมต่าง ๆ มาดังนี้</p>
+      <div class="teams"><span class="t-click">muzik.click() · 2 คน</span><span class="t-canet">CANET · 6 คน</span><span class="t-scroll">muzik.scroll() · 2 คน</span></div>
+      <div class="cta">
+        <p>ลองเปิดดูแบบต่าง ๆ คลิกให้ละเอียดเพื่อตัดสินใจว่าชอบแบบไหน แล้วกดปุ่มข้างล่างนี้</p>
+        <a class="vote" href="https://forms.gle/YMQ8jrvZDw1s26Fh6" target="_blank" rel="noopener">กดที่นี่เพื่อโหวตแบบที่ชอบ →</a>
+      </div>
+    </header>
+    <section class="cards" aria-label="แบบเสื้อ">
+      ${DESIGNS.map(d => `
+        <a class="design-card" href="#${d.token}">
+          <img src="img/d${d.n}/cover.webp" alt="แบบที่ ${d.n} ${d.name}: ด้านหน้าบนเสื้อขาว และด้านหลังบนเสื้อดำ" loading="eager">
+          <div class="txt">
+            <span class="num">แบบที่ ${d.n}</span>
+            <h2>${d.name}</h2>
+            <p>${d.tagline}</p>
+            <span class="go">ดูแบบนี้ →</span>
+          </div>
+        </a>`).join("")}
+    </section>
+    <section class="shared" aria-label="สิ่งที่ทุกแบบมีเหมือนกัน">
+      <div><h3>ลำดับโลโก้เดียวกัน</h3><p>ทุกแบบเรียง muzik.click() · CANET · muzik.scroll() ให้ CANET อยู่กลาง</p></div>
+      <div><h3>ด้านหลังบอกตัวคน</h3><p>ชื่อ ตำแหน่ง CREW หรือ COACH และทีมที่สังกัด ชื่อซ้ำแยกด้วย ♀ / ♂</p></div>
+      <div><h3>เสื้อขาวและเสื้อดำ</h3><p>ทุกแบบมีทั้งสองสี ลายปรับเฉดให้อ่านง่ายบนพื้นทั้งสองแบบ และไม่มีลายแขน</p></div>
+    </section>`;
+}
+
+function backSize(d, pid) {
+  if (d.back.h !== "byName") return `${d.back.w.toFixed(1)} × ${d.back.h} cm`;
+  return `${d.back.w.toFixed(1)} × ${BACK_H[d.n][pid].toFixed(1)} cm`;
+}
+
+function renderDesign(d) {
+  document.title = `แบบที่ ${d.n} ${d.name} · TGR#20 Team Shirts`;
+  const prev = DESIGNS[(d.n + 1) % 3], next = DESIGNS[d.n % 3];
+  app.innerHTML = `
+    <a class="back" href="#">← ทุกแบบ</a>
+    <header class="head">
+      <p class="eyebrow">แบบที่ ${d.n} · ${d.front.where} ${d.front.w.toFixed(1)} × ${d.front.h.toFixed(1)} cm · หลังกว้าง ${d.back.w.toFixed(1)} cm</p>
+      <h1>${d.name}</h1>
+      <p class="lede">${d.intro}</p>
+      ${d.n === 3 ? `<p class="motto">ARS LONGA, <em>ROBUSTA</em> BREVIS</p>` : ""}
+    </header>
+    <section class="viewer" aria-label="ดูเสื้อของแต่ละคน">
+      <div class="stage"><img id="shirt" alt=""></div>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="สีเสื้อ">
+          <button type="button" id="c-white" data-color="white">เสื้อขาว</button>
+          <button type="button" id="c-black" data-color="black">เสื้อดำ</button>
+        </div>
+        <div class="people" role="group" aria-label="เลือกคน">
+          ${PEOPLE.map(p => `<button type="button" id="p-${p.id}" class="${team(p)}" data-person="${p.id}"><i></i>${esc(p.name)}</button>`).join("")}
+        </div>
+      </div>
+      <p class="caption" id="cap"></p>
+    </section>
+    <section class="section">
+      <h2>แนวคิดการออกแบบ</h2>
+      <div class="notes">
+        ${d.notes.map(([h, items]) => `<div class="note"><h3>${h}</h3><ul>${items.map(i => `<li>${i}</li>`).join("")}</ul></div>`).join("")}
+      </div>
+    </section>
+    <section class="section">
+      <h2>ลายด้านหน้า</h2>
+      <div class="split">
+        <figure class="figure" style="margin:0"><img src="img/d${d.n}/chest-white.webp" alt="ลายด้านหน้าบนเสื้อขาว ขยาย"><figcaption class="caption">บนเสื้อขาว</figcaption></figure>
+        <figure class="figure" style="margin:0"><img src="img/d${d.n}/chest-black.webp" alt="ลายด้านหน้าบนเสื้อดำ ขยาย"><figcaption class="caption">บนเสื้อดำ</figcaption></figure>
+      </div>
+      <p class="caption">${d.chestCaption} · ${d.front.note}</p>
+    </section>
+    <section class="section">
+      <h2>ขนาดลาย</h2>
+      <div class="split">
+        <figure class="figure" style="margin:0"><img src="img/d${d.n}/mockup-white.webp" alt="เสื้อขาวพร้อมเส้นบอกขนาดลาย"><figcaption class="caption">ตัวอย่าง BOSS เสื้อขาว ไซซ์ L</figcaption></figure>
+        <figure class="figure" style="margin:0"><img src="img/d${d.n}/mockup-black.webp" alt="เสื้อดำพร้อมเส้นบอกขนาดลาย"><figcaption class="caption">ตัวอย่าง BOSS เสื้อดำ ไซซ์ L</figcaption></figure>
+      </div>
+      <div class="table-wrap">
+        <table class="sizes">
+          <thead><tr><th>ชื่อ</th><th>ทีม</th><th>ตำแหน่ง</th><th>${d.front.where}</th><th>ด้านหลัง</th></tr></thead>
+          <tbody>${PEOPLE.map(p => `<tr><td class="mono">${esc(p.name)}</td><td class="mono ${team(p)}">${p.team}</td><td>${p.role}</td>
+            <td class="mono">${d.front.w.toFixed(1)} × ${d.front.h.toFixed(1)} cm</td><td class="mono">${backSize(d, p.id)}</td></tr>`).join("")}</tbody>
+        </table>
+      </div>
+      <p class="caption">${d.back.note} · ขนาดเท่ากันทั้งเสื้อขาวและเสื้อดำ</p>
+    </section>
+    <nav class="pager" aria-label="แบบอื่น">
+      <a href="#${prev.token}"><span>← แบบที่ ${prev.n}</span>${prev.name}</a>
+      <a href="#${next.token}" style="text-align:right"><span>แบบที่ ${next.n} →</span>${next.name}</a>
+    </nav>`;
+  app.querySelectorAll("[data-color]").forEach(b => b.addEventListener("click", () => { state.color = b.dataset.color; save(); update(d) }));
+  app.querySelectorAll("[data-person]").forEach(b => b.addEventListener("click", () => { state.person = b.dataset.person; save(); update(d) }));
+  update(d);
+}
+
+function update(d) {
+  const p = PEOPLE.find(x => x.id === state.person) || PEOPLE[0];
+  const img = document.getElementById("shirt");
+  img.src = `img/d${d.n}/clean-${p.id}-${state.color}.webp`;
+  img.alt = `แบบที่ ${d.n} ของ ${p.name} ทีม ${p.team} ${p.role} ${THAI[state.color]} ด้านหน้าและด้านหลัง`;
+  document.getElementById("cap").textContent = `${p.name} · ทีม ${p.team} · ${p.role} · ${THAI[state.color]} · ด้านหลัง ${backSize(d, p.id)}`;
+  app.querySelectorAll("[data-color]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.color === state.color)));
+  app.querySelectorAll("[data-person]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.person === p.id)));
+}
+
+function route() {
+  const d = DESIGNS.find(x => "#" + x.token === location.hash);
+  d ? renderDesign(d) : renderIndex();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
